@@ -19,11 +19,13 @@ services:
     environment:
       - ADMIN_USERS
       - DATABASE_URL=postgres://jobsuser:pass@db:5432/jobserver
-      - DEBUG
-      - GITHUB_TOKEN
+      - DEBUG=True
+      - ADMIN_USERS=sanaparveen
+      - DJANGO_VITE_DEV_MODE=True
+      - GITHUB_TOKEN=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
       - SECRET_KEY=${SECRET_KEY:-12345}
-      - SOCIAL_AUTH_GITHUB_KEY
-      - SOCIAL_AUTH_GITHUB_SECRET
+      - SOCIAL_AUTH_GITHUB_KEY=a97d0519503c1e7d0efc
+      - SOCIAL_AUTH_GITHUB_SECRET=eaf0b26c7c8bede917a25238a6e78c37def20468
     ports:
       - "8000:8000"
     volumes:

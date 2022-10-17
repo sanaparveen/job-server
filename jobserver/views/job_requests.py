@@ -116,6 +116,7 @@ class JobRequestCreate(CreateView):
 
         # build actions as list or render the exception to the page
         ref = self.kwargs.get("ref", self.workspace.branch)
+        ref="main"
         try:
             self.project = get_project(
                 self.workspace.repo.owner,
@@ -323,13 +324,14 @@ class JobRequestPickRef(View):
     get_github_api = staticmethod(_get_github_api)
 
     def get(self, request, *args, **kwargs):
+        print(self.kwargs)
         workspace = get_object_or_404(
             Workspace,
             project__org__slug=self.kwargs["org_slug"],
             project__slug=self.kwargs["project_slug"],
             name=self.kwargs["workspace_slug"],
         )
-
+        print(workspace)
         if not has_permission(request.user, "job_request_pick_ref"):
             return redirect(workspace.get_jobs_url())
 
@@ -345,14 +347,18 @@ class JobRequestPickRef(View):
         # backends the user can see so we look them up here, removing the
         # relevant ones from the QS before we check if there are any below.
         backends = request.user.backends.all()
+        print(backends)
         if settings.DISABLE_CREATING_JOBS:
             backends = backends.exclude(Q(slug="emis") | Q(slug="tpp"))
 
+
+        print("@@@@@@@@@@@@@@@@@@@")
         # jobs need to be run on a backend so the user needs to have access to
         # at least one
         if not backends.exists():
             raise Http404
 
+        print("$$$$$$$$$$$$$$")
         response = functools.partial(
             TemplateResponse, request, "job_request_pick_ref.html"
         )

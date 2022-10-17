@@ -45,7 +45,7 @@ class PrivateReposDashboard(View):
          * not have `non-research` topic
          * first job was run > 11 months ago
         """
-        all_repos = list(self.get_github_api().get_repos_with_dates("opensafely"))
+        all_repos = list(self.get_github_api().get_repos_with_dates("SanaTestOrg"))
 
         # remove repos with the non-research topic
         all_repos = [r for r in all_repos if "non-research" not in r["topics"]]
