@@ -368,12 +368,13 @@ class JobRequestPickRef(View):
                 workspace.repo.owner,
                 workspace.repo.name,
             )
+
         except Exception as e:
             return response(context={"error": str(e), "workspace": workspace})
 
         commits = [
             {
-                "sha": c["commit"]["tree"]["sha"],
+                "sha": c["sha"],
                 "message": first(c["commit"]["message"].split("\n")),
             }
             for c in commits
